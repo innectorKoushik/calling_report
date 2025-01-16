@@ -1,8 +1,6 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
-import base64
-from pathlib import Path
 
 def main():
     st.set_page_config(page_title="Lead Analysis Dashboard", layout="wide")
@@ -49,15 +47,23 @@ def main():
         st.header("Hierarchical View of Leads")
         fig_hierarchy = px.sunburst(
             filtered_df,
-            path=['Group', 'Lead Type', 'Owner','Lead Stage'],
+            path=['Group', 'Lead Type', 'Owner', 'Lead Stage'],
             values=None,
             title='Hierarchical Grouping of Leads'
         )
         st.plotly_chart(fig_hierarchy)
 
-        # Display filtered data table (optional)
-        st.header("Filtered Data")
-        st.dataframe(filtered_df[['Lead Source', 'Lead Stage']])  # Display relevant columns
+        # Interactive section for hierarchical value counts
+        if st.button("Show Value Counts for Hierarchical View"):
+            st.header("Hierarchical Value Counts")
+            hierarchical_counts = filtered_df.groupby(
+                ['Group', 'Lead Type', 'Owner', 'Lead Stage']
+            ).size().reset_index(name='Count')
+            st.dataframe(hierarchical_counts)  # Display the grouped value counts
+        else:
+            # Default display: Filtered data table
+            st.header("Filtered Data")
+            st.dataframe(filtered_df[['Lead Source', 'Lead Stage']])  # Display relevant columns
 
 if __name__ == "__main__":
     main()
