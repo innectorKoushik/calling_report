@@ -49,7 +49,7 @@ def main():
         st.header("Hierarchical View of Leads")
         fig_hierarchy = px.sunburst(
             filtered_df,
-            path=['Group', 'Lead Type', 'Owner'],
+            path=['Group', 'Lead Type', 'Owner','Lead Stage'],
             values=None,
             title='Hierarchical Grouping of Leads'
         )
