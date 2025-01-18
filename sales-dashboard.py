@@ -1,4 +1,4 @@
-import streamlit as st
+hrimport streamlit as st
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
@@ -49,7 +49,7 @@ def main():
         st.header("Hierarchical View of Leads")
         fig_hierarchy = px.sunburst(
             filtered_df,
-            path=['Group', 'Lead Type', 'Owner', 'Lead Stage'],
+            path=['Group', 'Owner', 'Lead Stage'],
             values=None,
             title='Hierarchical Grouping of Leads'
         )
